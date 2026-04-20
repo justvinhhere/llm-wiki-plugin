@@ -10,7 +10,7 @@
       "description": "Compound knowledge base via git-versioned, LLM-maintained markdown.",
       "source": "./",
       "category": "productivity",
-      "version": "0.1.1"
+      "version": "0.1.2"
     }
   ]
 }

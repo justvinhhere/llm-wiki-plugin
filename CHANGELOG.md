@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2 — 2026-04-20
+
+Bootstrap stubs extracted to standalone files — single source of truth.
+
+- New `stubs/` directory at plugin root with `gitignore`, `llm-wiki.yaml`, `CLAUDE.md`, `README.md`, `index.md`. `wiki-bootstrap` now copies these files verbatim at `/wiki-init` time instead of reading them from inline blocks inside `skills/wiki-bootstrap/reference.md`.
+- `OBSIDIAN.md` at the plugin root is now the canonical copy used for both GitHub browsing and for the wiki-level `OBSIDIAN.md` that `/wiki-init` installs. Drift eliminated.
+- `OBSIDIAN.md` rewritten to be audience-neutral so the same file reads correctly whether you find it on GitHub or inside a wiki.
+- `skills/wiki-bootstrap/reference.md` shrunk to a short source → destination mapping table.
+
 ## 0.1.1 — 2026-04-20
 
 Docs + bootstrap refinements.

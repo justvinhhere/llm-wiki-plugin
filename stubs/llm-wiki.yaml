@@ -1,0 +1,35 @@
+schema_version: 1
+wiki_root: ./wiki
+raw_root: ./raw
+
+commit:
+  style: conventional
+  scopes: [ingest, query, lint, revise, revert, bootstrap]
+
+conventions:
+  filename_case: kebab-case
+  require_frontmatter: true
+
+ingest:
+  tldr_bullets: 5
+  raw_layout:
+    article: raw/articles
+    paper: raw/papers
+    video: raw/transcripts
+    note: raw/notes
+
+query:
+  top_k_candidates: 8
+  file_synthesis: true
+  dedupe_against_queries: true
+
+lint:
+  default_scope: full
+  stale_days: 180
+  orphan_allowlist:
+    - index.md
+    - wiki/topics/**
+  suggest_after_n_ingests: 10
+
+revert:
+  recent_commits_window: 20

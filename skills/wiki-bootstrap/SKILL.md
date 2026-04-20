@@ -24,13 +24,17 @@ Create, in order:
 
 1. `git init` if no `.git`.
 2. Directories: `wiki/entities/`, `wiki/concepts/`, `wiki/sources/`, `wiki/topics/`, `wiki/queries/`, `raw/`.
-3. Files, from the verbatim stubs in `reference.md`:
-   - `.gitignore`
-   - `.llm-wiki.yaml`
-   - `CLAUDE.md`
-   - `OBSIDIAN.md`
-   - `README.md`
-   - `index.md`
+3. Files copied verbatim from the plugin installation:
+   | Source | Destination |
+   | --- | --- |
+   | `${CLAUDE_PLUGIN_ROOT}/stubs/gitignore` | `./.gitignore` |
+   | `${CLAUDE_PLUGIN_ROOT}/stubs/llm-wiki.yaml` | `./.llm-wiki.yaml` |
+   | `${CLAUDE_PLUGIN_ROOT}/stubs/CLAUDE.md` | `./CLAUDE.md` |
+   | `${CLAUDE_PLUGIN_ROOT}/OBSIDIAN.md` | `./OBSIDIAN.md` |
+   | `${CLAUDE_PLUGIN_ROOT}/stubs/README.md` | `./README.md` |
+   | `${CLAUDE_PLUGIN_ROOT}/stubs/index.md` | `./index.md` |
+
+   `OBSIDIAN.md` is intentionally the same file used for GitHub browsing and for the wiki — single source of truth, no drift.
 4. Stage only the files listed above (explicit paths; never `git add .`).
 5. Commit with subject `bootstrap: initialize llm-wiki skeleton`.
 

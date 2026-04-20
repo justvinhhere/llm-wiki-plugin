@@ -1,0 +1,19 @@
+# Plugin caches
+.llm-wiki-cache/
+
+# Large or non-public raw sources
+raw/assets/*.pdf
+raw/**/*.mp4
+raw/**/*.mov
+
+# Obsidian state (not versioned)
+.obsidian/**
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Scratch
+__pycache__/
+node_modules/
+*.pyc
