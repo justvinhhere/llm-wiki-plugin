@@ -35,7 +35,7 @@ All commands also work as short forms (`/wiki-init`, `/ingest`, `/query`, …) w
 | `/llm-wiki:query <question>` | Search + synthesize from wiki content; synthesis answers auto-file as query pages. |
 | `/llm-wiki:review` | Audit + commit any uncommitted wiki edits with a conventional subject. |
 | `/llm-wiki:history <page> [--diffs]` | Narrated timeline of a single page's commits. |
-| `/llm-wiki:lint [--since <ref>]` | Structural audit — orphans, dead links, stale pages, contradictions. Read-only. |
+| `/llm-wiki:lint [--since <ref>]` | Structural audit-and-repair — orphans, dead links, stale pages, contradictions, index drift. One `lint(<date>)` commit per pass. |
 
 ## Automation model
 

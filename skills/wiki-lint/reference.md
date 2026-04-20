@@ -112,11 +112,34 @@ Index drift is always full-scope — the index is a single file, scoping is mean
 
 ---
 
-## Commit format for manual follow-up
+## Commit format
 
-When the user fixes findings, suggest these subjects:
+Every lint pass that applies at least one fix writes one commit:
 
-- Single-page fix → `revise(<page-slug>): <short why>`.
-- Bulk structural fix following a lint pass → `lint(<yyyy-mm-dd>): fix N orphan(s), M dead link(s)`.
+```
+lint(<yyyy-mm-dd>): fix N orphan(s), M dead link(s), K contradiction(s), …
+```
 
-Using `lint(<date>)` for the bulk fix makes the audit-and-fix pair greppable: `git log --grep "^lint"`.
+List only categories with non-zero fixes. Singular / plural per count. Subject ≤72 chars — drop lower-priority categories from the subject before truncating mid-word; the body carries the full accounting.
+
+Body (optional): one short line per resolved contradiction naming the page and the call, plus any non-obvious judgment calls from other categories (merges, page promotions, deletions). Mechanical fixes (typo'd slug, new index entry) need no body line. No `Co-Authored-By` trailer.
+
+`git log --grep "^lint"` lists every lint pass.
+
+---
+
+## Healing principles
+
+For each finding, the agent chooses the tactic that best preserves the wiki's invariants. These principles describe the target state, not the mechanism.
+
+**Orphans.** Every non-allowlisted page should be reachable from the link graph. Reachability can come from a topic page, a related entity, `index.md`, or from promoting the page itself into a topic. Frame the choice around where a reader would actually discover this page.
+
+**Dead links.** A `[[X]]` that doesn't resolve is either a typo (fix the slug), an alias that was renamed (point to the new slug), or a reference to a page that was never created (create it if the wiki substantively covers the subject; otherwise unwrap `[[X]]` to plain `X`). `dead-link-ambiguous` cases pick the contextually-correct target based on the surrounding paragraph.
+
+**Stale pages.** Pages past `lint.stale_days` either still reflect the source material (bump `updated:` with no body change and note why in the commit body) or are genuinely out of date. For out-of-date, the agent may re-read cited sources and revise, or mark `status: stale` if a refresh needs material the wiki doesn't have. `status: deprecated` when the subject has been superseded — never flagged stale again.
+
+**Missing cross-references.** A bare mention of an indexed entity / concept is a link opportunity, not a crime. Wrap it in `[[slug]]` when doing so aids navigation; leave it bare when the mention is incidental (figure caption, list of examples, paragraph already saturated with links). The agent's test is "would a reader benefit from clicking here."
+
+**Contradictions.** `contradictions:` frontmatter entries represent claims the ingest skill parked for editorial adjudication. Resolve by reading both source pages (their `raw_path:` content) and reconciling: prefer the more recent + higher-quality source, or synthesize a one-paragraph note acknowledging the tension if both sides hold. Rewrite the affected claim in the page body. Clear the resolved entry from `contradictions:`. Record the call in the lint commit body.
+
+**Index drift.** `index.md` is a catalog — every page belongs under its category, every `[[X]]` resolves. Regenerate entries as needed. Alphabetical within category is a soft guideline, not an invariant.

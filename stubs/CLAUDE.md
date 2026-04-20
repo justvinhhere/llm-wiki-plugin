@@ -10,7 +10,7 @@ All commands are invocable as `/llm-wiki:<name>` (fully qualified) or as `/<name
 - `/llm-wiki:query <question>` — search + synthesize from wiki content. Synthesis answers auto-file as query pages and commit as `query(<slug>)`.
 - `/llm-wiki:review` — audit + commit any uncommitted wiki edits with a conventional subject.
 - `/llm-wiki:history <page> [--diffs]` — narrate a page's commit history.
-- `/llm-wiki:lint [--since <ref>]` — structural audit (orphans, dead links, stale pages, contradictions, index drift). Read-only.
+- `/llm-wiki:lint [--since <ref>]` — structural audit-and-repair. Detects orphans, dead links, stale pages, contradictions, index drift and fixes each in place. Commits as `lint(<date>)`.
 
 ## House rules
 

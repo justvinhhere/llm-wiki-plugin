@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.4 — 2026-04-20
+
+`/lint` is now mutation-first.
+
+- `/llm-wiki:lint` detects and fixes in a single pass, committing as `lint(<yyyy-mm-dd>)`. No more "audit-and-tell-the-human" split.
+- Fix tactics are chosen by the agent per finding, not prescribed by the skill. Orphans get a contextual backlink; dead links get resolved, rewritten, or unwrapped; stale pages get refreshed or marked; contradictions get adjudicated against their cited sources with the call recorded in the commit body; missing cross-refs get wrapped when they aid navigation; `index.md` gets regenerated.
+- Refuses if `wiki/` or `index.md` has uncommitted changes — mixing hand-edits with a lint pass would produce a muddled commit. Caller commits or stashes first (use `/review` for hand-edits).
+- Healing principles (intent per category) added to `skills/wiki-lint/reference.md`.
+- README + bootstrapped `CLAUDE.md` updated to drop the "Read-only" label.
+
 ## 0.1.3 — 2026-04-20
 
 Scope reduction: drop the git-operation skill wrappers.
