@@ -2,6 +2,8 @@
 
 A Claude Code plugin for building a compound, LLM-maintained knowledge base as git-versioned markdown. Every wiki mutation is a commit, so `git blame` on any line traces the claim back to the ingest that introduced it and the raw source it cites — **provenance for free, no inline citations to maintain.**
 
+Inspired by Andrej Karpathy's gist [*"On LLM Wikis"*](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — this plugin is one concrete take on the compound-knowledge-base-as-git-repo idea sketched there.
+
 Works excellent with [Obsidian](./OBSIDIAN.md) as a viewer, but Obsidian is not required.
 
 ## Install
