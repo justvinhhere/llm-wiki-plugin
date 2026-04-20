@@ -21,7 +21,7 @@ Open **Settings → Files & Links**:
 Ship with Obsidian; enable under **Settings → Core plugins**.
 
 - **Graph view** — `[[links]]` rendered as a graph. Spot orphan clusters and dense concept neighborhoods.
-- **Backlinks** — side panel listing every inbound reference to the current page. Complements `/llm-wiki:blame` (which answers "which source introduced this line").
+- **Backlinks** — side panel listing every inbound reference to the current page.
 - **Outline** — in-page navigation.
 - **Tag pane** — browse by frontmatter `tags:`.
 
@@ -64,10 +64,8 @@ Optional extras: **Templater** (keyboard-shortcut template insertion for custom 
 | Small hand-edits (typos, clarifications) | Obsidian + `/llm-wiki:review` to commit |
 | Ingest a new source | `/llm-wiki:ingest` |
 | Ask a question against wiki content | `/llm-wiki:query` |
-| Trace provenance of a claim | `/llm-wiki:blame` |
 | Narrate a page's history | `/llm-wiki:history` |
 | Structural audit | `/llm-wiki:lint` |
-| Undo an ingest | `/llm-wiki:revert` |
 
 **Obsidian = reader + micro-editor. Claude Code = agent.** Both work on the same git-tracked filesystem and don't step on each other.
 

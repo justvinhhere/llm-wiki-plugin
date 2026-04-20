@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3 — 2026-04-20
+
+Scope reduction: drop the git-operation skill wrappers.
+
+- Removed `/llm-wiki:blame` and the `wiki-blame` skill. Use `git blame`, `git log -S`, or `git log --follow` directly — commit scopes (`ingest(<slug>)`, `query(<slug>)`) already carry the provenance pointer.
+- Removed `/llm-wiki:revert` and the `wiki-revert` skill. Use `git revert <sha>` directly.
+- Removed `revert` from `.llm-wiki.yaml:commit.scopes` and deleted the `revert:` config block. Existing wikis with `revert(…)` commits in history are unaffected; new reverts authored by hand can use any scope the user prefers.
+- README "How git is used" section removed. Git is still the substrate; it no longer needs its own marketing section now that the only skills that surfaced it are gone.
+
 ## 0.1.2 — 2026-04-20
 
 Bootstrap stubs extracted to standalone files — single source of truth.

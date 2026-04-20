@@ -1,6 +1,6 @@
 # llm-wiki
 
-A Claude Code plugin for building a compound, LLM-maintained knowledge base as git-versioned markdown. Every wiki mutation is a commit, so `git blame` on any line traces the claim back to the ingest that introduced it and the raw source it cites — **provenance for free, no inline citations to maintain.**
+A Claude Code plugin for building a compound, LLM-maintained knowledge base as git-versioned markdown. Every wiki mutation is a scoped commit, so the full evolution of any page is inspectable via `git log`.
 
 Inspired by Andrej Karpathy's gist [*"On LLM Wikis"*](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — this plugin is one concrete take on the compound-knowledge-base-as-git-repo idea sketched there.
 
@@ -34,26 +34,14 @@ All commands also work as short forms (`/wiki-init`, `/ingest`, `/query`, …) w
 | `/llm-wiki:ingest <path-or-url>` | Read a source, write all affected pages, commit as `ingest(<slug>)`. |
 | `/llm-wiki:query <question>` | Search + synthesize from wiki content; synthesis answers auto-file as query pages. |
 | `/llm-wiki:review` | Audit + commit any uncommitted wiki edits with a conventional subject. |
-| `/llm-wiki:blame <page> [line]` | Trace a claim to its commit, ingest scope, and the raw source passage. |
 | `/llm-wiki:history <page> [--diffs]` | Narrated timeline of a single page's commits. |
 | `/llm-wiki:lint [--since <ref>]` | Structural audit — orphans, dead links, stale pages, contradictions. Read-only. |
-| `/llm-wiki:revert [<sha>]` | Undo a wiki-mutation commit via `git revert`. Defaults to the most recent ingest. |
-
-## How git is used
-
-The plugin treats git as the substrate for three specific guarantees:
-
-- **Provenance without inline citations.** Every commit subject is scoped to its source (`ingest(<slug>)`, `query(<slug>)`, `revise(<page>)`). `git blame` on any wiki line returns the commit that introduced it; the scope points to the source page; the source page's `raw_path:` points to the original material. No `(source: X)` bookkeeping in prose required.
-- **Full diff-level history.** Every commit records the complete before/after of every touched page. `/llm-wiki:history <page>` narrates a page's evolution; `/llm-wiki:blame <page>` surfaces the introducing commit; `git log --grep "^ingest"` lists every ingest across the wiki's life.
-- **Recoverable mistakes.** Bad ingest? `/llm-wiki:revert` runs `git revert` and commits the undo. History stays linear; the reverted change is itself greppable.
-
-The plugin is deliberately thin above git — no shipped scripts, no hooks, no MCP. Skills are prose guidance; the agent composes concrete `git` and filesystem calls at runtime.
 
 ## Automation model
 
-Every skill is **automation-first**: no interactive prompts. `/llm-wiki:ingest` reads, writes, and commits in one invocation. Safety lives in refuse-conditions (schema mismatch, dirty wiki tree, collision on init, merge conflict on revert) — skills abort on unsafe preconditions instead of asking.
+Every skill is **automation-first**: no interactive prompts. `/llm-wiki:ingest` reads, writes, and commits in one invocation. Safety lives in refuse-conditions (schema mismatch, dirty wiki tree, collision on init) — skills abort on unsafe preconditions instead of asking.
 
-Humans audit through git after the fact (`git log`, `git show`, `/llm-wiki:review` for uncommitted hand-edits, `/llm-wiki:blame` for any line, `/llm-wiki:lint` for structural health). The wiki is designed so an agent can maintain it unattended while a human periodically checks.
+Humans audit through git after the fact (`git log`, `git show`, `/llm-wiki:review` for uncommitted hand-edits, `/llm-wiki:lint` for structural health). The wiki is designed so an agent can maintain it unattended while a human periodically checks.
 
 ## Configuration
 

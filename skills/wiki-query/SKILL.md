@@ -22,7 +22,7 @@ Answers questions against the current wiki and its git history. Never fetches th
 | Lookup | Asks for pointers / list / counts. "which pages link to X", "list pages tagged Y", "when did Z first appear". | Skip. |
 | Synthesis | Asks for comparison, summary, explanation, cross-page connection. Answer is new prose. | File. |
 
-Ambiguous → synthesis (filing is cheap, reversible via `/revert`).
+Ambiguous → synthesis (filing is cheap, reversible via `git revert`).
 
 If the raw question text contains `"don't file"` or `"just answer"` (case-insensitive, substring match), force skip regardless of classification.
 

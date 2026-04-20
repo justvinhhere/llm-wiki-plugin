@@ -9,10 +9,8 @@ All commands are invocable as `/llm-wiki:<name>` (fully qualified) or as `/<name
 - `/llm-wiki:ingest <path-or-url>` — read a source and file it into the wiki. Commits as `ingest(<slug>)`.
 - `/llm-wiki:query <question>` — search + synthesize from wiki content. Synthesis answers auto-file as query pages and commit as `query(<slug>)`.
 - `/llm-wiki:review` — audit + commit any uncommitted wiki edits with a conventional subject.
-- `/llm-wiki:blame <page> [line-or-phrase]` — trace a claim back to its commit, ingest scope, and raw source passage.
 - `/llm-wiki:history <page> [--diffs]` — narrate a page's commit history.
 - `/llm-wiki:lint [--since <ref>]` — structural audit (orphans, dead links, stale pages, contradictions, index drift). Read-only.
-- `/llm-wiki:revert [<sha>]` — back out a wiki-mutation commit via `git revert`. Defaults to the most recent ingest.
 
 ## House rules
 

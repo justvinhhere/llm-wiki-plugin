@@ -19,7 +19,7 @@ contradictions: []         # [{source: <slug>, note: "..."}]
 
 ## Key facts
 
-- <Fact one, with provenance visible via `git blame` — no inline citation needed, but `(see [[source-slug]])` is fine when it aids the reader.>
+- <Fact one — `(see [[source-slug]])` is fine when inline citation aids the reader, otherwise the source lives in the page's frontmatter `sources:` list.>
 - <Fact two.>
 
 ## Related

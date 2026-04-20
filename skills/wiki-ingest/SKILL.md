@@ -33,7 +33,7 @@ The chosen path is `raw_path` in `sources/<slug>.md` frontmatter. `raw/` is immu
 
 ### 2. Read the source in full
 
-Complete read. Partial reads are forbidden — they produce partial claims that bake into blame history.
+Complete read. Partial reads are forbidden — they produce partial claims that bake into commit history.
 
 ### 3. Compute the edit set
 

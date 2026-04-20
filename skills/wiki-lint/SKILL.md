@@ -55,4 +55,4 @@ Note: <N> ingests since last lint pass.
 
 ### 5. No auto-fix
 
-Lint writes nothing. Users fix findings via `/revise`, `/ingest`, or `/revert`.
+Lint writes nothing. Users fix findings via `/revise` or `/ingest`.

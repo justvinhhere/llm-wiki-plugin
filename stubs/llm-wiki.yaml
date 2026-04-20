@@ -4,7 +4,7 @@ raw_root: ./raw
 
 commit:
   style: conventional
-  scopes: [ingest, query, lint, revise, revert, bootstrap]
+  scopes: [ingest, query, lint, revise, bootstrap]
 
 conventions:
   filename_case: kebab-case
@@ -30,6 +30,3 @@ lint:
     - index.md
     - wiki/topics/**
   suggest_after_n_ingests: 10
-
-revert:
-  recent_commits_window: 20

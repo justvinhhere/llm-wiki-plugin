@@ -102,7 +102,6 @@ ingest(<source-slug>):  add source, update N page(s)
 query(<query-slug>):    file synthesized answer
 lint(<yyyy-mm-dd>):     fix N orphan(s), M dead link(s)
 revise(<page-slug>):    <short why>
-revert(<target-scope>): undo <original-subject-truncated-to-60-chars>
 bootstrap:              initialize llm-wiki skeleton
 ```
 

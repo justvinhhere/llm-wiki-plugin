@@ -1,6 +1,6 @@
 ---
 name: wiki-history
-description: Use when the user runs /history <page> [--diffs], says "how did this page evolve", "show me the history of [[X]]", or wants a narrated timeline of a single page's commits. Classifies each commit (creation / expansion / maintenance / revert / rename) and narrates. Read-only.
+description: Use when the user runs /history <page> [--diffs], says "how did this page evolve", "show me the history of [[X]]", or wants a narrated timeline of a single page's commits. Classifies each commit (creation / expansion / maintenance / rename) and narrates. Read-only.
 ---
 
 # wiki-history
@@ -31,7 +31,6 @@ First query yields SHA + date + subject per commit. Second detects rename bounda
 | Scope `ingest(<slug>)`, not creation | Expansion via ingest |
 | Scope `revise(<slug>)`, not creation | Human revision |
 | Scope `lint(<date>)` | Maintenance |
-| Scope `revert(<target>)` | Revert |
 | Rename flag from second query | Rename (record old and new path) |
 | Scope `bootstrap:` | Scaffolding |
 
