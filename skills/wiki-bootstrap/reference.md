@@ -16,8 +16,7 @@ raw/**/*.mp4
 raw/**/*.mov
 
 # Editor noise
-.obsidian/workspace*
-.obsidian/cache
+.obsidian/**
 .DS_Store
 Thumbs.db
 
