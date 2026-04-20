@@ -14,7 +14,7 @@ Abort and report reason. Do not mutate anything.
 1. `.llm-wiki.yaml` exists at CWD or any ancestor — already inside a wiki.
 2. `git --version` fails — git unavailable.
 3. CWD is `$HOME`, `/`, `/tmp`, `/Users`, `/var`, or any directory not specifically created for a wiki.
-4. CWD is non-empty and contains any path in the write-set (`.gitignore`, `.llm-wiki.yaml`, `CLAUDE.md`, `README.md`, `index.md`, `wiki/`, `raw/`). Collision with existing content is a hard refuse.
+4. CWD is non-empty and contains any path in the write-set (`.gitignore`, `.llm-wiki.yaml`, `CLAUDE.md`, `OBSIDIAN.md`, `README.md`, `index.md`, `wiki/`, `raw/`). Collision with existing content is a hard refuse.
 
 A non-empty CWD that does not collide with the write-set proceeds silently. A pre-existing `.git` is reused; otherwise `git init` runs.
 
@@ -28,6 +28,7 @@ Create, in order:
    - `.gitignore`
    - `.llm-wiki.yaml`
    - `CLAUDE.md`
+   - `OBSIDIAN.md`
    - `README.md`
    - `index.md`
 4. Stage only the files listed above (explicit paths; never `git add .`).
@@ -35,4 +36,4 @@ Create, in order:
 
 ## Output
 
-Single line on success: `Wiki initialized at <pwd>. Next: /ingest <path-or-url>.`
+Single line on success: `Wiki initialized at <pwd>. Next: /llm-wiki:ingest <path-or-url>.`

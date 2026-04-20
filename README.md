@@ -2,11 +2,13 @@
 
 A Claude Code plugin for building a compound, LLM-maintained knowledge base as git-versioned markdown. Every wiki mutation is a commit, so `git blame` on any line traces the claim back to the ingest that introduced it and the raw source it cites — **provenance for free, no inline citations to maintain.**
 
+Works excellent with [Obsidian](./OBSIDIAN.md) as a viewer, but Obsidian is not required.
+
 ## Install
 
 ```
 /plugin marketplace add https://github.com/justvinhhere/llm-wiki-plugin
-/plugin install llm-wiki
+/plugin install llm-wiki@llm-wiki-marketplace
 ```
 
 Restart Claude Code.
@@ -15,42 +17,58 @@ Restart Claude Code.
 
 ```
 mkdir my-wiki && cd my-wiki
-/wiki-init                 # scaffold skeleton + first commit
-/ingest https://...        # read a source, file it, commit on approval
-/query "what does the wiki say about X"
+/llm-wiki:wiki-init          # scaffold skeleton + first commit
+/llm-wiki:ingest https://... # read a source, write pages, commit as ingest(<slug>)
+/llm-wiki:query "what does the wiki say about X"
 ```
+
+All commands also work as short forms (`/wiki-init`, `/ingest`, `/query`, …) when there's no name collision with other installed plugins.
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `/wiki-init` | Scaffold a new wiki in the current directory. |
-| `/ingest <path-or-url>` | Read a source, propose page touches, commit on approval. |
-| `/query <question>` | Search + synthesize from wiki content; auto-files synthesis answers. |
-| `/review` | Narrate uncommitted changes, suggest a commit message. |
-| `/blame <page> [line]` | Trace a claim to its commit, ingest scope, and raw source passage. |
-| `/history <page>` | Narrated timeline of a single page's evolution. |
-| `/lint` | Structural health check (orphans, dead links, stale pages, contradictions). |
-| `/revert` | Undo a bad ingest via `git revert`. |
+| `/llm-wiki:wiki-init` | Scaffold a new wiki in the current directory + first commit. |
+| `/llm-wiki:ingest <path-or-url>` | Read a source, write all affected pages, commit as `ingest(<slug>)`. |
+| `/llm-wiki:query <question>` | Search + synthesize from wiki content; synthesis answers auto-file as query pages. |
+| `/llm-wiki:review` | Audit + commit any uncommitted wiki edits with a conventional subject. |
+| `/llm-wiki:blame <page> [line]` | Trace a claim to its commit, ingest scope, and the raw source passage. |
+| `/llm-wiki:history <page> [--diffs]` | Narrated timeline of a single page's commits. |
+| `/llm-wiki:lint [--since <ref>]` | Structural audit — orphans, dead links, stale pages, contradictions. Read-only. |
+| `/llm-wiki:revert [<sha>]` | Undo a wiki-mutation commit via `git revert`. Defaults to the most recent ingest. |
 
-## Why git
+## How git is used
 
-Karpathy's [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern treats provenance as a hard problem. This plugin's bet is that `git` already solved three of the hardest parts:
+The plugin treats git as the substrate for three specific guarantees:
 
-- **Provenance** → `git blame` + scoped commit subjects (`ingest(karpathy-llm-wiki)`) give line-level citations with no bookkeeping.
-- **Reviewability** → the write path is always _draft → diff → approve → commit_; no silent wiki mutations.
-- **Recoverability** → `git revert` is a one-command undo for any ingest.
+- **Provenance without inline citations.** Every commit subject is scoped to its source (`ingest(<slug>)`, `query(<slug>)`, `revise(<page>)`). `git blame` on any wiki line returns the commit that introduced it; the scope points to the source page; the source page's `raw_path:` points to the original material. No `(source: X)` bookkeeping in prose required.
+- **Full diff-level history.** Every commit records the complete before/after of every touched page. `/llm-wiki:history <page>` narrates a page's evolution; `/llm-wiki:blame <page>` surfaces the introducing commit; `git log --grep "^ingest"` lists every ingest across the wiki's life.
+- **Recoverable mistakes.** Bad ingest? `/llm-wiki:revert` runs `git revert` and commits the undo. History stays linear; the reverted change is itself greppable.
 
-The plugin layers thin LLM-driven workflows on top of those primitives and stays out of git's way otherwise. No hooks, no MCP, no shipped scripts — the agent composes concrete `git` and filesystem calls at runtime based on prose guidance in the skills.
+The plugin is deliberately thin above git — no shipped scripts, no hooks, no MCP. Skills are prose guidance; the agent composes concrete `git` and filesystem calls at runtime.
+
+## Automation model
+
+Every skill is **automation-first**: no interactive prompts. `/llm-wiki:ingest` reads, writes, and commits in one invocation. Safety lives in refuse-conditions (schema mismatch, dirty wiki tree, collision on init, merge conflict on revert) — skills abort on unsafe preconditions instead of asking.
+
+Humans audit through git after the fact (`git log`, `git show`, `/llm-wiki:review` for uncommitted hand-edits, `/llm-wiki:blame` for any line, `/llm-wiki:lint` for structural health). The wiki is designed so an agent can maintain it unattended while a human periodically checks.
 
 ## Configuration
 
-Each wiki carries a `.llm-wiki.yaml` at its root. Defaults cover all tunable parameters. Keys users commonly edit:
+Each wiki carries a `.llm-wiki.yaml` at its root. Defaults cover every tunable parameter. Commonly edited keys:
 
 - `lint.stale_days` — age threshold for flagging stale pages (default 180).
 - `query.top_k_candidates` — max pages read in full when answering a query (default 8).
 - `lint.orphan_allowlist` — glob patterns whose pages are never flagged as orphans.
-- `ingest.raw_layout` — where each source type lands under `raw/`.
+- `ingest.raw_layout` — where each source type lands under `raw/` (article / paper / transcript / note).
+
+## With Obsidian
+
+Obsidian is an excellent viewer for a llm-wiki — `[[wikilinks]]` are native, the graph view visualizes the page network, Dataview lets you query frontmatter dynamically. Open the wiki repo as an Obsidian vault.
+
+See [OBSIDIAN.md](./OBSIDIAN.md) for setup, recommended plugins, required settings, and the Obsidian-plus-Claude-Code workflow.
+
+Obsidian is **not** a dependency — you can edit the wiki in any editor, and every `/llm-wiki:` command runs without it.
 
 ## Example wiki
 
@@ -60,19 +78,18 @@ my-wiki/
 ├── .gitignore
 ├── .llm-wiki.yaml
 ├── CLAUDE.md
+├── OBSIDIAN.md
 ├── README.md
-├── index.md                  # catalog, LLM-maintained
+├── index.md                  # catalog, plugin-maintained
 ├── raw/
 │   ├── articles/
-│   │   └── karpathy-llm-wiki.md
 │   └── papers/
 └── wiki/
-    ├── entities/karpathy.md
-    ├── concepts/llm-wiki.md
-    ├── concepts/memex.md
-    ├── sources/karpathy-llm-wiki.md
-    ├── topics/compound-knowledge.md
-    └── queries/rag-vs-wiki.md
+    ├── entities/
+    ├── concepts/
+    ├── sources/
+    ├── topics/
+    └── queries/
 ```
 
 ## What this is not

@@ -1,6 +1,6 @@
 {
   "name": "llm-wiki",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Compound knowledge base via git-versioned, LLM-maintained markdown.",
   "author": { "name": "Vinh Nguyen", "email": "phuvinh97ag@gmail.com" },
   "homepage": "https://github.com/justvinhhere/llm-wiki-plugin",
