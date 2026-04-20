@@ -1,0 +1,11 @@
+{
+  "name": "llm-wiki",
+  "version": "0.1.0",
+  "description": "Compound knowledge base via git-versioned, LLM-maintained markdown.",
+  "author": { "name": "Vinh Nguyen", "email": "phuvinh97ag@gmail.com" },
+  "homepage": "https://github.com/justvinhhere/llm-wiki-plugin",
+  "repository": "https://github.com/justvinhhere/llm-wiki-plugin.git",
+  "license": "MIT",
+  "keywords": ["knowledge-base", "wiki", "notes", "git", "memex", "second-brain"],
+  "category": "productivity"
+}

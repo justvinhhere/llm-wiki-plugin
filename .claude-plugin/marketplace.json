@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "llm-wiki-marketplace",
+  "version": "1.0.0",
+  "description": "The llm-wiki plugin — git-versioned LLM knowledge bases.",
+  "owner": { "name": "Vinh Nguyen", "email": "phuvinh97ag@gmail.com" },
+  "plugins": [
+    {
+      "name": "llm-wiki",
+      "description": "Compound knowledge base via git-versioned, LLM-maintained markdown.",
+      "source": "./",
+      "category": "productivity",
+      "version": "0.1.0"
+    }
+  ]
+}
